@@ -1,53 +1,54 @@
 package com.uri.pauloeurias.TrabalhoFinal.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
 
 public class RifaDto {
+
+    @NotNull
+    private Integer rifaNumber;
+
     @NotBlank
-    @Size(max = 3)
-    private Integer RifaNumber;
+    private String rifaNome;
+
     @NotBlank
-    @Size(max = 50)
-    private String RifaNome;
-    @NotBlank
-    @Size(max = 10)
-    private Date RifaDataSorteio;
-    @NotBlank
-    @Size(max = 7)
-    private Double RifaPreco;
+    private String rifaDataSorteio;
+
+    @NotNull
+    private Double rifaPreco;
 
     public Integer getRifaNumber() {
-        return RifaNumber;
+        return rifaNumber;
     }
 
     public void setRifaNumber(Integer rifaNumber) {
-        RifaNumber = rifaNumber;
+        this.rifaNumber = rifaNumber;
     }
 
     public String getRifaNome() {
-        return RifaNome;
+        return rifaNome;
     }
 
     public void setRifaNome(String rifaNome) {
-        RifaNome = rifaNome;
+        this.rifaNome = rifaNome;
     }
 
-    public Date getRifaDataSorteio() {
-        return RifaDataSorteio;
+    public String getRifaDataSorteio() {
+        return rifaDataSorteio;
     }
 
-    public void setRifaDataSorteio(Date rifaDataSorteio) {
-        RifaDataSorteio = rifaDataSorteio;
+    public void setRifaDataSorteio(String rifaDataSorteio) {
+        this.rifaDataSorteio = rifaDataSorteio;
     }
 
     public Double getRifaPreco() {
-        return RifaPreco;
+        return rifaPreco;
     }
 
     public void setRifaPreco(Double rifaPreco) {
-        RifaPreco = rifaPreco;
+        this.rifaPreco = rifaPreco;
     }
 }

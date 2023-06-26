@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -15,14 +14,17 @@ public class RifaModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @Column(nullable = false,unique = true,length = 3)
-    private Integer RifaNumber;
-    @Column(nullable = false, length = 50)
-    private String RifaNome;
-    @Column(nullable = false,length = 10)
-    private Date RifaDataSorteio;
-    @Column(nullable = false, length = 7)
-    private Double RifaPreco;
+    @Column(nullable = false, unique = true)
+    private Integer rifaNumber;
+
+    @Column(nullable = false)
+    private String rifaNome;
+
+    @Column(nullable = false)
+    private String rifaDataSorteio;
+
+    @Column(nullable = false)
+    private Double rifaPreco;
     @Column(nullable = false)
     private LocalDateTime registrationDate;
 
@@ -35,35 +37,35 @@ public class RifaModel implements Serializable {
     }
 
     public Integer getRifaNumber() {
-        return RifaNumber;
+        return rifaNumber;
     }
 
     public void setRifaNumber(Integer rifaNumber) {
-        RifaNumber = rifaNumber;
+        this.rifaNumber = rifaNumber;
     }
 
     public String getRifaNome() {
-        return RifaNome;
+        return rifaNome;
     }
 
     public void setRifaNome(String rifaNome) {
-        RifaNome = rifaNome;
+        this.rifaNome = rifaNome;
     }
 
-    public Date getRifaDataSorteio() {
-        return RifaDataSorteio;
+    public String getRifaDataSorteio() {
+        return rifaDataSorteio;
     }
 
-    public void setRifaDataSorteio(Date rifaDataSorteio) {
-        RifaDataSorteio = rifaDataSorteio;
+    public void setRifaDataSorteio(String rifaDataSorteio) {
+        this.rifaDataSorteio = rifaDataSorteio;
     }
 
     public Double getRifaPreco() {
-        return RifaPreco;
+        return rifaPreco;
     }
 
     public void setRifaPreco(Double rifaPreco) {
-        RifaPreco = rifaPreco;
+        this.rifaPreco = rifaPreco;
     }
 
     public LocalDateTime getRegistrationDate() {

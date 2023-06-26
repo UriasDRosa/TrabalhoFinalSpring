@@ -9,4 +9,5 @@ import java.util.UUID;
 @Repository
 public interface RifaRepository extends JpaRepository<RifaModel, UUID> {
 
+    boolean existsByRifaNumber(Integer rifaNumber);
 }

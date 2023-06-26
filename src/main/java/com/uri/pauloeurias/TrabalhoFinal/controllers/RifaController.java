@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -25,10 +27,53 @@ public class RifaController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveParkingSpot(@RequestBody @Valid RifaDto rifaDto){
+    public ResponseEntity<Object> saveRifa(@RequestBody @Valid RifaDto rifaDto){
+        if(rifaService.existsByRifaNumber(rifaDto.getRifaNumber())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: Número de rifa já comprado");
+        }
         var rifaModel = new RifaModel();
         BeanUtils.copyProperties(rifaDto, rifaModel);
         rifaModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         return ResponseEntity.status(HttpStatus.CREATED).body(rifaService.save(rifaModel));
     }
+
+    @GetMapping
+    public ResponseEntity<List<RifaModel>> getAllRifas(){
+        return ResponseEntity.status(HttpStatus.OK).body(rifaService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneRifa(@PathVariable(value = "id") UUID id){
+        Optional<RifaModel> rifaModelOptional = rifaService.findById(id);
+        if(!rifaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rifa não encontrada");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(rifaModelOptional.get());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteRifa(@PathVariable(value = "id") UUID id){
+        Optional<RifaModel> rifaModelOptional = rifaService.findById(id);
+        if(!rifaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rifa não encontrada");
+        }
+        rifaService.delete(rifaModelOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).body("Rifa deletada com sucesso!");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateRifa(@PathVariable(value = "id") UUID id,
+                                             @RequestBody @Valid RifaDto rifaDto){
+        Optional<RifaModel> rifaModelOptional = rifaService.findById(id);
+        if(!rifaModelOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rifa não encontrada");
+        }
+        var rifaModel = new RifaModel();
+        BeanUtils.copyProperties(rifaDto,rifaModel);
+        rifaModel.setId(rifaModelOptional.get().getId());
+        rifaModel.setRegistrationDate(rifaModelOptional.get().getRegistrationDate());
+
+        return ResponseEntity.status(HttpStatus.OK).body(rifaService.save(rifaModel));
+    }
+
 }

@@ -3,6 +3,8 @@ package com.uri.pauloeurias.TrabalhoFinal.services;
 import com.uri.pauloeurias.TrabalhoFinal.models.RifaModel;
 import com.uri.pauloeurias.TrabalhoFinal.repositories.RifaRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +29,8 @@ public class RifaService {
         return rifaRepository.existsByRifaNumber(rifaNumber);
     }
 
-    public List<RifaModel> findAll() {
-        return rifaRepository.findAll();
+    public Page<RifaModel> findAll(Pageable pageable) {
+        return rifaRepository.findAll(pageable);
     }
 
     public Optional<RifaModel> findById(UUID id) {
